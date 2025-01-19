@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-file-uploader-crud",
+  "version": "1.0.0",
+  "description": "## **Introduction**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1Amal/NodeJs-File-Uploader-CRUD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/1Amal/NodeJs-File-Uploader-CRUD/issues"
+  },
+  "homepage": "https://github.com/1Amal/NodeJs-File-Uploader-CRUD#readme",
+  "dependencies": {
+    "@prisma/client": "^6.2.1",
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.2.1"
+  }
+}
