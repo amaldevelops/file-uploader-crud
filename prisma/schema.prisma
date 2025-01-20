@@ -20,7 +20,15 @@ model Session {
   expiresAt DateTime
 }
 
-model Test{
-  id String @id
-  name String
+model Users {
+  id        Int    @id @unique
+  user_name String
+  password  String
+}
+
+model FileDetails {
+  id          Int    @id @unique
+  file_url    String
+  file_size   String
+  folder_name String
 }
