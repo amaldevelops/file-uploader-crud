@@ -19,3 +19,8 @@ model Session {
   data      String
   expiresAt DateTime
 }
+
+model Test{
+  id String @id
+  name String
+}
