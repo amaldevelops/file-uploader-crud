@@ -2,7 +2,9 @@ import express from "express";
 
 const app = express();
 
-import session from "express-session";
+import expressSession from "express-session";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
+import { PrismaClient } from "@prisma/client";
 
 import path from "node:path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -20,6 +22,22 @@ app.set("views", path.join(__dirname, "views"));
 
 import AppRouter from "./routes/appRouter.js";
 app.use("/", AppRouter);
+
+app.use(
+  expressSession({
+    cookie: {
+      maxAge: 7 * 24 * 60 * 1000, //ms
+    },
+    secret: "a santa at nasa",
+    resave: true,
+    saveUninitialized: true,
+    store: new PrismaSessionStore(new PrismaClient(), {
+      checkPeriod: 2 * 60 * 1000, //ms
+      dbRecordIdIsSessionId: true,
+      dbRecordIdFunction: undefined,
+    }),
+  })
+);
 
 app.listen(process.env.APP_PORT || 3000, () => {
   console.log(`File Uploader Running on localhost:${process.env.APP_PORT}`);
