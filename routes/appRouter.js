@@ -4,14 +4,18 @@ import { getHome } from "../controllers/AppController.js";
 
 import { getFileUpload } from "../controllers/AppController.js";
 
-import { main } from "../controllers/AppController.js";
+import { main } from "../app.js";
+// import { authenticate } from "passport";
+
+import { authenticateUser } from "../controllers/AppController.js";
 
 const AppRouter = Router();
 
 AppRouter.get("/", getHome);
 
-AppRouter.get("/uploadfiles",getFileUpload )
+AppRouter.get("/uploadfiles", getFileUpload);
+AppRouter.post("/uploadfiles", authenticateUser);
 
-AppRouter.get("/seed",main)
+// AppRouter.get("/seed",main)
 
 export default AppRouter;
