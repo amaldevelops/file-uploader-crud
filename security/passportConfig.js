@@ -9,7 +9,11 @@ import { prisma } from "../app.js";
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const { findUser } = await prisma.username.findMany();
+      const { findUser } = await prisma.username.findUnique({
+        where: {
+          email: "maverick@gmail.com",
+        },
+      });
       console.log(findUser);
 
       const user = findUser[0];
@@ -28,5 +32,24 @@ passport.use(
     }
   })
 );
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const { rows } = await prisma.username.findUnique({
+      where: {
+        id: 2,
+      },
+    });
+    const user = rows[0];
+
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 export { passport };

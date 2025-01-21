@@ -1,5 +1,7 @@
 import express from "express";
 
+import {passport} from "./security/passportConfig.js";
+
 const app = express();
 
 import expressSession from "express-session";
@@ -26,6 +28,8 @@ app.set("views", path.join(__dirname, "views"));
 import AppRouter from "./routes/appRouter.js";
 app.use("/", AppRouter);
 
+app.use(passport.session());
+
 app.use(
   expressSession({
     cookie: {
@@ -45,13 +49,13 @@ app.use(
 export async function main() {
   console.log("Seed to Database");
 
-  // const saveFileDetails = await prisma.Users.create({
-  //   data: {
-  //     id: 1,
-  //     user_name: "maverick",
-  //     password:"20252025"
-  //   },
-  // });
+  const saveFileDetails = await prisma.Users.create({
+    data: {
+
+      user_name: "maverick@gmail.com",
+      password:"20252025"
+    },
+  });
 }
 
 main()

@@ -14,6 +14,7 @@ const AppRouter = Router();
 AppRouter.get("/", getHome);
 
 AppRouter.get("/uploadfiles", getFileUpload);
+
 AppRouter.post("/uploadfiles", authenticateUser);
 
 // AppRouter.get("/seed",main)

@@ -21,13 +21,13 @@ model Session {
 }
 
 model Users {
-  id        Int    @id @unique
+  id        Int    @id @default(autoincrement())
   user_name String
   password  String
 }
 
 model FileDetails {
-  id          Int    @id @unique
+  id          Int    @id @default(autoincrement())
   file_url    String
   file_size   String
   folder_name String
