@@ -4,12 +4,12 @@ import LocalStrategy from "passport-local";
 
 import bcrypt from "bcryptjs";
 
-import { prisma } from "../app.js";
+import { prismaClientInstance } from "../db/prismaQuery.js";
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const { findUser } = await prisma.username.findUnique({
+      const { findUser } = await prismaClientInstance.username.findUnique({
         where: {
           email: "maverick@gmail.com",
         },

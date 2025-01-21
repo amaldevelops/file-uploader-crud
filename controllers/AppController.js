@@ -1,4 +1,4 @@
-import { prisma } from "../app.js";
+import { prismaClientInstance } from "../db/prismaQuery.js";
 
 export async function getHome(req, res, next) {
   res.render("index");
