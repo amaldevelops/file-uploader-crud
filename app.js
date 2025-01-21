@@ -1,6 +1,6 @@
 import express from "express";
 
-import {passport} from "./security/passportConfig.js";
+import { passport } from "./security/passportConfig.js";
 
 const app = express();
 
@@ -9,7 +9,6 @@ import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-
 
 import path from "node:path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -51,9 +50,8 @@ export async function main() {
 
   const saveFileDetails = await prisma.Users.create({
     data: {
-
       user_name: "maverick@gmail.com",
-      password:"20252025"
+      password: "20252025",
     },
   });
 }
@@ -70,5 +68,4 @@ app.listen(process.env.APP_PORT || 3000, () => {
   console.log(`File Uploader Running on localhost:${process.env.APP_PORT}`);
 });
 
-
-export {prisma};
+export { prisma };

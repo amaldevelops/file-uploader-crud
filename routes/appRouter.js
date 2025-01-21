@@ -9,6 +9,8 @@ import { main } from "../app.js";
 
 import { authenticateUser } from "../controllers/AppController.js";
 
+import { passport } from "../security/passportConfig.js";
+
 const AppRouter = Router();
 
 AppRouter.get("/", getHome);

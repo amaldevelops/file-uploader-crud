@@ -14,4 +14,5 @@ export async function authenticateUser(req, res, next) {
     password: req.body.password,
   };
   console.log(userSubmittedDetails);
+  res.render("uploadFiles");
 }
