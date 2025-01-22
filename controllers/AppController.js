@@ -17,8 +17,13 @@ export async function authenticateUser(req, res, next) {
   res.render("uploadFiles");
 }
 
-export async function testPrisma(req,res,next)
-{
-res.send("Hey test Prisma !");
+export async function testPrisma(req, res, next) {
+  const findUser = await prismaClientInstance.users.findUnique({
+    where: {
+      user_name: "hello@gmail.com",
+    },
+  });
+  console.log(findUser);
 
+  res.send("Hey test Prisma !");
 }
