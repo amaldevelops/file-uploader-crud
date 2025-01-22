@@ -27,3 +27,8 @@ export async function testPrisma(req, res, next) {
 
   res.send("Hey test Prisma !");
 }
+
+export async function getNotAuthorized(req,res,next)
+{
+  res.render("notAuthorized")
+}
