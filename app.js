@@ -1,5 +1,7 @@
 import express from "express";
 
+import passport from "passport";
+
 import { passportInstance } from "./security/passportConfig.js";
 
 import { prismaSession } from "./security/prismaSession.js";
@@ -8,7 +10,9 @@ const app = express();
 
 app.use(prismaSession);
 
-// app.use(passportInstance.session());
+app.use(passport.initialize());
+
+app.use(passport.session());
 
 import path from "node:path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);

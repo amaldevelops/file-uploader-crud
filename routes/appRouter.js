@@ -2,7 +2,11 @@ import { Router } from "express";
 
 import { getHome } from "../controllers/AppController.js";
 
-import { getFileUpload,authenticateUser,getNotAuthorized } from "../controllers/AppController.js";
+import {
+  getFileUpload,
+  authenticateUser,
+  getNotAuthorized,
+} from "../controllers/AppController.js";
 
 // import { authenticateUser } from "../controllers/AppController.js";
 
@@ -15,8 +19,12 @@ AppRouter.get("/", getHome);
 
 // AppRouter.get("/uploadfiles", getFileUpload);
 
-AppRouter.post("/uploadfiles",passport.authenticate("local",{failureRedirect:"/"}),authenticateUser);
+AppRouter.post(
+  "/uploadfiles",
+  passport.authenticate("local", { failureRedirect: "/" }),
+  authenticateUser
+);
 
-AppRouter.get("/notauthorized", getNotAuthorized)
+AppRouter.get("/notauthorized", getNotAuthorized);
 
 export default AppRouter;
