@@ -7,30 +7,38 @@ import bcrypt from "bcryptjs";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
 const passportInstance = passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const { findUser } = await prismaClientInstance.username.findUnique({
-        where: {
-          email: username,
-        },
-      });
-      console.log(findUser);
+  new LocalStrategy(
+    {
+      usernameField: "user_name",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, username, password, done) => {
+      try {
+        const findUser = await prismaClientInstance.users.findUnique({
+          where: {
+            user_name: username,
+          },
+        });
+        console.log(findUser);
 
-      const user = findUser[0];
+        if (!findUser) {
+          return done(null, false, { message: "Incorrect Username" });
+        }
 
-      if (!user) {
-        return done(null, false, { message: "Incorrect Username" });
+        const match = await bcrypt.compare(password, findUser.password);
+
+        if (!match) {
+          console.log("Incorrect Password");
+          return done(null, false, { message: "Incorrect Password" });
+        }
+
+        return done(null, findUser);
+      } catch (error) {
+        return done(err);
       }
-
-      const match = await bcrypt.compare(password, user.password);
-
-      if (!match) {
-        return done(null, false, { message: "Incorrect Password" });
-      }
-    } catch (error) {
-      return done(err);
     }
-  })
+  )
 );
 
 passport.serializeUser((user, done) => {
@@ -39,12 +47,13 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const { rows } = await prisma.username.findUnique({
-      where: {
-        id: 2,
-      },
+    const user = await prismaClientInstance.username.findUnique({
+      where: { id },
     });
-    const user = rows[0];
+
+    if (!user) {
+      return done(null, false);
+    }
 
     done(null, user);
   } catch (err) {

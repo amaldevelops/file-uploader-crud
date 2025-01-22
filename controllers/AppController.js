@@ -20,7 +20,7 @@ export async function authenticateUser(req, res, next) {
 export async function testPrisma(req, res, next) {
   const findUser = await prismaClientInstance.users.findUnique({
     where: {
-      user_name: "hello@gmail.com",
+      user_name: req.body.user_name,
     },
   });
   console.log(findUser);
