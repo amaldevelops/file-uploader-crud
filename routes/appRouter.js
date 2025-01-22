@@ -21,7 +21,7 @@ AppRouter.get("/", getHome);
 
 AppRouter.post(
   "/uploadfiles",
-  passport.authenticate("local", { failureRedirect: "/" }),
+  passport.authenticate("local", { failureRedirect: "/notauthorized" }),
   authenticateUser
 );
 
