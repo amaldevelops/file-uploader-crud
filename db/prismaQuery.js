@@ -2,14 +2,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prismaClientInstance = new PrismaClient();
 
-main()
-  .catch((error) => {
-    throw error;
-  })
-  .finally(async () => {
-    await prismaClientInstance.$disconnect();
-  });
-
 export async function main() {
   console.log("Seed to Database");
 
@@ -20,5 +12,13 @@ export async function main() {
     },
   });
 }
+
+main()
+  .catch((error) => {
+    throw error;
+  })
+  .finally(async () => {
+    await prismaClientInstance.$disconnect();
+  });
 
 export { prismaClientInstance };

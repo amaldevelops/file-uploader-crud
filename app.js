@@ -1,10 +1,14 @@
 import express from "express";
 
-import { passport } from "./security/passportConfig.js";
+import { passportInstance } from "./security/passportConfig.js";
 
 import { prismaSession } from "./security/prismaSession.js";
 
 const app = express();
+
+app.use(prismaSession);
+
+// app.use(passportInstance.session());
 
 import path from "node:path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -22,10 +26,6 @@ app.set("views", path.join(__dirname, "views"));
 
 import AppRouter from "./routes/appRouter.js";
 app.use("/", AppRouter);
-
-app.use(passport.session());
-
-app.use(prismaSession);
 
 app.listen(process.env.APP_PORT || 3000, () => {
   console.log(`File Uploader Running on localhost:${process.env.APP_PORT}`);

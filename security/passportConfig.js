@@ -6,12 +6,12 @@ import bcrypt from "bcryptjs";
 
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
-passport.use(
+const passportInstance = passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
       const { findUser } = await prismaClientInstance.username.findUnique({
         where: {
-          email: "maverick@gmail.com",
+          email: username,
         },
       });
       console.log(findUser);
@@ -52,4 +52,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-export { passport };
+export { passportInstance };

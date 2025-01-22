@@ -16,3 +16,9 @@ export async function authenticateUser(req, res, next) {
   console.log(userSubmittedDetails);
   res.render("uploadFiles");
 }
+
+export async function testPrisma(req,res,next)
+{
+res.send("Hey test Prisma !");
+
+}
