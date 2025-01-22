@@ -31,6 +31,14 @@ app.set("views", path.join(__dirname, "views"));
 import AppRouter from "./routes/appRouter.js";
 app.use("/", AppRouter);
 
+// Error Handling
+app.use((err,req,res,next)=>{
+  console.error(err.stack);
+  res
+  .status(500)
+  .send("Something Went Wrong, Developer please check the server logs, if you are an user contact the developer");
+});
+
 app.listen(process.env.APP_PORT || 3000, () => {
   console.log(`File Uploader Running on localhost:${process.env.APP_PORT}`);
 });

@@ -6,6 +6,8 @@ import {
   getFileUpload,
   authenticateUser,
   getNotAuthorized,
+  formValidationSignIn
+  
 } from "../controllers/AppController.js";
 
 // import { authenticateUser } from "../controllers/AppController.js";
@@ -20,7 +22,7 @@ AppRouter.get("/", getHome);
 // AppRouter.get("/uploadfiles", getFileUpload);
 
 AppRouter.post(
-  "/uploadfiles",
+  "/uploadfiles",formValidationSignIn,
   passport.authenticate("local", { failureRedirect: "/notauthorized" }),
   authenticateUser
 );
