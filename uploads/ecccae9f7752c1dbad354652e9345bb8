@@ -1,0 +1,9 @@
+https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options
+
+
+To download an entire channel, you can use yt-dlp:
+
+yt-dlp https://www.youtube.com/@beetlejuicearchives3490
+If you're like me and only care for the audio, you can use a few more arguments:
+
+yt-dlp -x --audio-format mp3 https://www.youtube.com/@beetl

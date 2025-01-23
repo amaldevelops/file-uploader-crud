@@ -9,6 +9,13 @@ export async function getFileUpload(req, res, next) {
   res.render("uploadFiles");
 }
 
+export async function postUploadFiles(req,res,next)
+{
+  console.log(req.file);
+
+res.render("fileuploaded",{uploadedFileDetails:req.file})
+}
+
 export async function authenticateUser(req, res, next) {
   try {
     const userSubmittedDetails = {
