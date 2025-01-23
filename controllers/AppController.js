@@ -21,7 +21,6 @@ export async function authenticateUser(req, res, next) {
       user_name: req.body.user_name,
       password: req.body.password,
     };
-    // console.log(userSubmittedDetails);
     res.render("uploadFiles");
     next();
   } catch (err) {
@@ -51,7 +50,7 @@ export async function currentFileList(req, res, next) {
   try {
     const currentFileList = await prismaClientInstance.FileDetails.findMany();
     console.log(currentFileList);
-    res.render("uploadFiles",{currentFileList:currentFileList});
+    res.render("uploadFiles", { currentFileList: currentFileList });
   } catch (err) {
     next(err);
   }

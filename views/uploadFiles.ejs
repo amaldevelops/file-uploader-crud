@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upload Files</title>
-  </head>
-  <body>
-    <div>
-      <a href="/notauthorized">Logout</a>
-      <h1>Upload Files</h1>
-      <form method="post" action="/fileuploaded" enctype="multipart/form-data">
-        <label>Upload File</label>
-        <input type="file" name="file_upload" id="file_upload" /><br />
-        <button type="submit">Upload</button>
-      </form>
-    </div>
-    <div>
-        <h1>Current File List</h1>
-        <%=currentFileList[0]["file_url"]%>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Files</title>
+</head>
+
+<body>
+  <div></div>
+  <div>
+    <a href="/notauthorized">Logout</a>
+    <h1>Upload Files</h1>
+    <form method="post" action="/fileuploaded" enctype="multipart/form-data">
+      <label>Upload File</label>
+      <input type="file" name="file_upload" id="file_upload" /><br />
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+
+  <div>
+    <form method="post" action="/fileuploaded">
+      <input type="text">
+      <button type="submit">Create Folder</button>
+    </form>
+  </div>
+  <div>
+    <h1>Current File List</h1>
+    <ul>
+      <%if(currentFileList.length>0){%>
+      <%currentFileList.forEach(result=>{%>
+      <li>Folder: <a href=<%=result.folder_name%>><%=result.folder_name%></a><%=result.folder_name%> File URL: <%=result.Original_file_name%>
+
+        <%})%>
+      </li>
+      <%}else{%>
+      <p>No Files Save</p>
+      <%}%>
+      </ul>
     </div>
   </body>
 </html>
