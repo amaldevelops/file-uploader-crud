@@ -22,13 +22,16 @@ model Session {
 
 model Users {
   id        Int    @id @default(autoincrement())
-  user_name String  @unique
+  user_name String @unique
   password  String
 }
 
 model FileDetails {
-  id          Int    @id @default(autoincrement())
-  file_url    String @unique
-  file_size   String
-  folder_name String
+  id                 Int    @id @default(autoincrement())
+  Original_file_name String
+  hashed_file_name  String
+  file_url           String @unique
+  file_size          String
+  folder_name        String
+  date_saved DateTime @default(now())
 }

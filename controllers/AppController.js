@@ -21,8 +21,9 @@ export async function authenticateUser(req, res, next) {
       user_name: req.body.user_name,
       password: req.body.password,
     };
-    console.log(userSubmittedDetails);
+    // console.log(userSubmittedDetails);
     res.render("uploadFiles");
+    next();
   } catch (err) {
     next(err);
   }
@@ -47,8 +48,11 @@ export async function formValidationSignIn(req, res, next) {
 }
 
 export async function currentFileList(req, res, next) {
-  console.log("currentFileList Ran");
-  const currentFileList = await prismaClientInstance.FileDetails.findMany();
-  console.log(currentFileList);
-  next();
+  try {
+    const currentFileList = await prismaClientInstance.FileDetails.findMany();
+    console.log(currentFileList);
+    res.render("uploadFiles",{currentFileList:currentFileList});
+  } catch (err) {
+    next(err);
+  }
 }

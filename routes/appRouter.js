@@ -31,13 +31,13 @@ AppRouter.post(
   passport.authenticate("local", {
     failureRedirect: "/notauthorized",
   }),
-  authenticateUser
+  currentFileList
 );
 
 AppRouter.get(
   "/uploadfiles",
   passport.authenticate("local", { failureRedirect: "/notauthorized" }),
-  authenticateUser
+  currentFileList
 );
 
 AppRouter.get("/notauthorized", getNotAuthorized);
