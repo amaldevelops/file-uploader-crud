@@ -25,19 +25,40 @@
       <button type="submit">Create Folder</button>
     </form>
   </div>
+
   <div>
     <h1>Current File List</h1>
-    <ul>
-      <%if(currentFileList.length>0){%>
-      <%currentFileList.forEach(result=>{%>
-      <li>Folder: <a href=<%=result.folder_name%>><%=result.folder_name%></a><%=result.folder_name%> File URL: <%=result.Original_file_name%>
+    <div>
+      <% if (currentFileList.length > 0) { %>
+      <% 
+      // Group files by folder_name
+      const groupedFiles = {};
+      currentFileList.forEach(file => {
+        if (!groupedFiles[file.folder_name]) {
+          groupedFiles[file.folder_name] = [];
+        }
+        groupedFiles[file.folder_name].push(file);
+      });
+    %>
 
-        <%})%>
-      </li>
-      <%}else{%>
-      <p>No Files Save</p>
-      <%}%>
+      <% for (const folder in groupedFiles) { %>
+      <h2>Folder: <a href=<%= folder %>> <%= folder %></a> </h2>
+      <ul>
+        <% groupedFiles[folder].forEach(file => { %>
+        <li>
+          File:<a href=<%= file.Original_file_name %>><%= file.Original_file_name %></a>
+        </li>
+        <% }) %>
       </ul>
+      <% } %>
+      <% } else { %>
+      <p>No Files Saved</p>
+      <% } %>
     </div>
-  </body>
+
+
+  </div>
+
+</body>
+
 </html>
