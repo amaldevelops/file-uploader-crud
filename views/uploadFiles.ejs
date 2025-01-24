@@ -46,7 +46,7 @@
       <ul>
         <% groupedFiles[folder].forEach(file => { %>
         <li>
-          File:<a href=<%= file.Original_file_name %>><%= file.Original_file_name %></a>
+          File:<a href=<%= file.file_url%>><%= file.Original_file_name %></a>
         </li>
         <% }) %>
       </ul>
