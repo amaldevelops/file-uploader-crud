@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
-import {readFileList,addFileInfoToDb} from "../db/prismaQuery.js"
+import { readFileList, addFileInfoToDb, fileInfo } from "../db/prismaQuery.js";
 
 export async function getHome(req, res, next) {
   res.render("index");
@@ -14,22 +14,19 @@ export async function getFileUpload(req, res, next) {
 export async function postUploadFiles(req, res, next) {
   console.log(req.file);
 
-  const uploadedFileDetailsObject=req.file;
+  const uploadedFileDetailsObject = req.file;
 
   addFileInfoToDb(uploadedFileDetailsObject);
 
   res.render("fileuploaded", { uploadedFileDetails: req.file });
 }
 
-export async function deleteFile(req,res,next)
-{
-  try{
+export async function deleteFile(req, res, next) {
+  try {
     const deleteFileName = req.hashed_file_name;
-
+  } catch (err) {
+    next(err);
   }
-
-  catch(err)
-  {next(err)}
 }
 
 export async function authenticateUser(req, res, next) {
@@ -67,7 +64,7 @@ export async function currentFileList(req, res, next) {
   try {
     // const currentFileList = await prismaClientInstance.FileDetails.findMany();
 
-    const currentFileList =await readFileList();
+    const currentFileList = await readFileList();
     console.log(currentFileList);
     res.render("uploadFiles", { currentFileList: currentFileList });
   } catch (err) {
@@ -75,9 +72,8 @@ export async function currentFileList(req, res, next) {
   }
 }
 
-export async function getFileInfo(req,res,next)
-{
+export async function getFileInfo(req, res, next) {
+  const returned = await fileInfo("b6b6767b8990cfbc52762b1bce27ab17");
+  console.log(returned);
   res.render("fileInfo");
 }
-
-

@@ -6,12 +6,24 @@ export { prismaClientInstance };
 
 export async function readFileList() {
   try {
+    const currentFileList = await prismaClientInstance.FileDetails.findMany();
+    return currentFileList;
   } catch (err) {
     throw err;
   }
+}
 
-  const currentFileList = await prismaClientInstance.FileDetails.findMany();
-  return currentFileList;
+export async function fileInfo(fileName) {
+  try {
+    const fileInfo = await prismaClientInstance.FileDetails.findUnique({
+      where: {
+        hashed_file_name: fileName,
+      },
+    });
+    return fileInfo;
+  } catch (err) {
+    throw err;
+  }
 }
 
 export async function addFileInfoToDb(uploadedFileDetailsObject) {
