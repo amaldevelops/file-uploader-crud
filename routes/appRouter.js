@@ -18,6 +18,7 @@ import {
   getNotAuthorized,
   formValidationSignIn,
   currentFileList,
+  getFileInfo
 } from "../controllers/AppController.js";
 
 const AppRouter = Router();
@@ -48,6 +49,10 @@ AppRouter.post(
   "/fileuploaded",
   upload_files.single("file_upload"),
   postUploadFiles
+);
+
+AppRouter.get(
+  "/fileinfo", getFileInfo
 );
 
 export default AppRouter;

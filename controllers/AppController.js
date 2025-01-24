@@ -75,4 +75,9 @@ export async function currentFileList(req, res, next) {
   }
 }
 
+export async function getFileInfo(req,res,next)
+{
+  res.render("fileInfo");
+}
+
 
