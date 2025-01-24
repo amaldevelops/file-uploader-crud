@@ -73,7 +73,7 @@ export async function currentFileList(req, res, next) {
 }
 
 export async function getFileInfo(req, res, next) {
-  const returned = await fileInfo("b6b6767b8990cfbc52762b1bce27ab17");
-  console.log(returned);
-  res.render("fileInfo");
+  const returnedFileInfo = await fileInfo("b6b6767b8990cfbc52762b1bce27ab17");
+  console.log(returnedFileInfo);
+  res.render("fileInfo", { returnedFileInfo: returnedFileInfo });
 }

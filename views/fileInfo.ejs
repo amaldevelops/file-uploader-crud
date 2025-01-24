@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>File Info</title>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-        <h1>File Info</h1>
+        <a href="/uploadfiles">Back Home</a>
+      <h1>File Info</h1>
+      <ul>
+        <% if(Object.keys(returnedFileInfo).length>0){%>
+        <li>Original File Name: <%=returnedFileInfo.Original_file_name%></li>
+
+        <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
+
+        <li>File URL: <%=returnedFileInfo.file_url%></li>
+
+        <li>File Size: <%=returnedFileInfo.file_size%></li>
+
+        <li>Date Created: <%=returnedFileInfo.folder_name %></li>
+
+        <li>Date Created: <%=returnedFileInfo.date_saved %></li>
+        <%} else{%>
+        <p>No Info About file available</p>
+        <%} %>
+      </ul>
     </div>
-</body>
+  </body>
 </html>

@@ -3,9 +3,7 @@ import { Router } from "express";
 import multer from "multer";
 const upload_files = multer({ dest: "/home/amal/Downloads/multer_uploads" });
 
-import { passportInstance } from "../security/passportConfig.js";
-
-import passport from "passport";
+import { passportInstance, passport } from "../security/passportConfig.js";
 
 import { getHome } from "../controllers/AppController.js";
 
@@ -18,7 +16,7 @@ import {
   getNotAuthorized,
   formValidationSignIn,
   currentFileList,
-  getFileInfo
+  getFileInfo,
 } from "../controllers/AppController.js";
 
 const AppRouter = Router();
@@ -52,7 +50,12 @@ AppRouter.post(
 );
 
 AppRouter.get(
-  "/fileinfo", getFileInfo
+  "/fileinfo",
+  passport.authenticate("local", {
+    successRedirect: "/fileinfo",
+    failureRedirect: "/notauthorized",
+  }),
+  getFileInfo
 );
 
 export default AppRouter;

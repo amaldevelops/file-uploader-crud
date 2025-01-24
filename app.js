@@ -1,8 +1,8 @@
 import express from "express";
 
-import passport from "passport";
+// import passport from "./security/passportConfig.js";
 
-import { passportInstance } from "./security/passportConfig.js";
+import { passportInstance,passport } from "./security/passportConfig.js";
 
 import { prismaSession } from "./security/prismaSession.js";
 
