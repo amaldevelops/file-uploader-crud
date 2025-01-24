@@ -61,4 +61,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-export { passportInstance,passport };
+export { passportInstance, passport };

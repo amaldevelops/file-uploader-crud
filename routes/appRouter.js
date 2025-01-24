@@ -33,11 +33,7 @@ AppRouter.post(
   currentFileList
 );
 
-AppRouter.get(
-  "/uploadfiles",
-  passport.authenticate("local", { failureRedirect: "/notauthorized" }),
-  currentFileList
-);
+AppRouter.get("/uploadfiles", authenticateUser, currentFileList);
 
 AppRouter.get("/notauthorized", getNotAuthorized);
 
@@ -49,13 +45,6 @@ AppRouter.post(
   postUploadFiles
 );
 
-AppRouter.get(
-  "/fileinfo",
-  passport.authenticate("local", {
-    successRedirect: "/fileinfo",
-    failureRedirect: "/notauthorized",
-  }),
-  getFileInfo
-);
+AppRouter.get("/fileinfo", authenticateUser, getFileInfo);
 
 export default AppRouter;

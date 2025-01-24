@@ -31,12 +31,18 @@ export async function deleteFile(req, res, next) {
 
 export async function authenticateUser(req, res, next) {
   try {
-    const userSubmittedDetails = {
-      user_name: req.body.user_name,
-      password: req.body.password,
-    };
-    res.render("uploadFiles");
-    next();
+    // const userSubmittedDetails = {
+    //   user_name: req.body.user_name,
+    //   password: req.body.password,
+    // };
+
+    if (req.isAuthenticated()) {
+      return next();
+    }
+
+    res.redirect("/notauthorized");
+    // res.render("uploadFiles");
+    // next();
   } catch (err) {
     next(err);
   }
