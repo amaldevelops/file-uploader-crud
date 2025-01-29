@@ -15,13 +15,15 @@
 
         <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
 
-        <li>File URL: <%=returnedFileInfo.file_url%></li>
+        
 
         <li>File Size: <%=returnedFileInfo.file_size%></li>
 
-        <li>Date Created: <%=returnedFileInfo.folder_name %></li>
+        <li>Folder Name: <%=returnedFileInfo.folder_name %></li>
 
         <li>Date Created: <%=returnedFileInfo.date_saved %></li>
+
+         <a href=<%=returnedFileInfo.file_url%>>Download File</a>
         <%} else{%>
         <p>No Info About file available</p>
         <%} %>

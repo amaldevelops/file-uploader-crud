@@ -45,6 +45,6 @@ AppRouter.post(
   postUploadFiles
 );
 
-AppRouter.get("/fileinfo", authenticateUser, getFileInfo);
+AppRouter.get("/fileinfo/:fileId", authenticateUser, getFileInfo);
 
 export default AppRouter;

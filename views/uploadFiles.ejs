@@ -42,11 +42,11 @@
     %>
 
       <% for (const folder in groupedFiles) { %>
-      <h2>Folder: <a href=<%= folder %>> <%= folder %></a> </h2>
+      <h2>Folder: <%= folder %> </h2>
       <ul>
         <% groupedFiles[folder].forEach(file => { %>
         <li>
-          File:<a href=<%= file.file_url%>><%= file.Original_file_name %></a>
+          File: <a href=<%=`fileinfo/${file.hashed_file_name}`%>><%= file.Original_file_name %></a>
         </li>
         <% }) %>
       </ul>

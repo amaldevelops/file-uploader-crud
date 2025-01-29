@@ -41,8 +41,7 @@ export async function authenticateUser(req, res, next) {
     }
 
     return res.redirect("/notauthorized");
-    // res.render("uploadFiles");
-    // next();
+
   } catch (err) {
     console.error("Authentication Error");
     return next(err);
@@ -85,7 +84,10 @@ export async function currentFileList(req, res, next) {
 }
 
 export async function getFileInfo(req, res, next) {
-  const returnedFileInfo = await fileInfo("b6b6767b8990cfbc52762b1bce27ab17");
+  const fileId=req.params;
+  console.log(fileId);
+  const returnedFileInfo = await fileInfo(fileId.fileId);
   console.log(returnedFileInfo);
+ 
   res.render("fileInfo", { returnedFileInfo: returnedFileInfo });
 }
