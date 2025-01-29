@@ -40,16 +40,22 @@ export async function authenticateUser(req, res, next) {
       return next();
     }
 
-    res.redirect("/notauthorized");
+    return res.redirect("/notauthorized");
     // res.render("uploadFiles");
     // next();
   } catch (err) {
-    next(err);
+    console.error("Authentication Error");
+    return next(err);
   }
 }
 
 export async function getNotAuthorized(req, res, next) {
-  res.render("notAuthorized");
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).send("Failed to Log out !");
+    }
+    return res.render("notAuthorized");
+  });
 }
 
 export async function formValidationSignIn(req, res, next) {
