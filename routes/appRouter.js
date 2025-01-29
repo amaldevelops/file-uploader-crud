@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import multer from "multer";
-const upload_files = multer({ dest: "/home/amal/Downloads/multer_uploads" });
+const upload_files = multer({ dest: "../home/amal/Downloads/multer_uploads" });
 
 import { passportInstance, passport } from "../security/passportConfig.js";
 

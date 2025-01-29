@@ -41,7 +41,6 @@ export async function authenticateUser(req, res, next) {
     }
 
     return res.redirect("/notauthorized");
-
   } catch (err) {
     console.error("Authentication Error");
     return next(err);
@@ -73,8 +72,6 @@ export async function formValidationSignIn(req, res, next) {
 
 export async function currentFileList(req, res, next) {
   try {
-    // const currentFileList = await prismaClientInstance.FileDetails.findMany();
-
     const currentFileList = await readFileList();
     console.log(currentFileList);
     res.render("uploadFiles", { currentFileList: currentFileList });
@@ -84,10 +81,10 @@ export async function currentFileList(req, res, next) {
 }
 
 export async function getFileInfo(req, res, next) {
-  const fileId=req.params;
+  const fileId = req.params;
   console.log(fileId);
   const returnedFileInfo = await fileInfo(fileId.fileId);
   console.log(returnedFileInfo);
- 
+
   res.render("fileInfo", { returnedFileInfo: returnedFileInfo });
 }
