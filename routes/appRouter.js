@@ -17,6 +17,7 @@ import {
   formValidationSignIn,
   currentFileList,
   getFileInfo,
+  postCreateFolder,
 } from "../controllers/AppController.js";
 
 const AppRouter = Router();
@@ -44,6 +45,8 @@ AppRouter.post(
   upload_files.single("file_upload"),
   postUploadFiles
 );
+
+AppRouter.post("/foldercreated", postCreateFolder);
 
 AppRouter.get("/fileinfo/:fileId", authenticateUser, getFileInfo);
 

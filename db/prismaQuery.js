@@ -71,3 +71,19 @@ export async function renameFileInfoDb(fileNameToChange, newDetailsObject) {
     throw err;
   }
 }
+
+export async function CreateFolderDb(newFolderName) {
+  try {
+    await prismaClientInstance.FileDetails.create({
+      data: {
+        Original_file_name: "",
+        hashed_file_name: newFolderName,
+        file_url: newFolderName,
+        folder_name: newFolderName,
+        file_size: "",
+      },
+    });
+  } catch (err) {
+    throw err;
+  }
+}

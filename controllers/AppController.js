@@ -1,7 +1,12 @@
 import { validationResult } from "express-validator";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
-import { readFileList, addFileInfoToDb, fileInfo } from "../db/prismaQuery.js";
+import {
+  readFileList,
+  addFileInfoToDb,
+  fileInfo,
+  CreateFolderDb,
+} from "../db/prismaQuery.js";
 
 export async function getHome(req, res, next) {
   res.render("index");
@@ -89,4 +94,13 @@ export async function getFileInfo(req, res, next) {
   console.log(returnedFileInfo);
 
   res.render("fileInfo", { returnedFileInfo: returnedFileInfo });
+}
+
+export async function postCreateFolder(req, res, next) {
+  const newFolderName = req.body.newFolderName;
+  console.log(newFolderName);
+
+  CreateFolderDb(newFolderName);
+
+  res.render("folderCreated");
 }
