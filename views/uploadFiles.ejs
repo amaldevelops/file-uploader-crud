@@ -17,11 +17,24 @@
       <input type="file" name="file_upload" id="file_upload" /><br />
       <label>Select Folder: </label>
       <select name="folder_names" id="folder_names" form="file_upload">
-        <%if(currentFileList.length>0) { %>
-          <% currentFileList.forEach(result=>{ %>
-            <option value=<%=result["folder_name"]%>><%=result["folder_name"]%></option>
-          <%})} %>
-      </select> <br/>
+  
+        <% if(currentFileList.length > 0) { %>
+          <% // Group files by folder_name
+          const groupedFiles = {};
+          currentFileList.forEach(file => {
+            const folderName = file.folder_name;
+            if (!groupedFiles[folderName]) {
+              groupedFiles[folderName] = [];
+            }
+            groupedFiles[folderName].push(file);
+          }); %>
+          
+          <% // Create options for each folder
+          Object.keys(groupedFiles).forEach(folderName => { %>
+            <option value="<%= folderName %>"><%= folderName %></option>
+          <% }); %>
+        <% } %>
+                </select> <br/>
       <button type="submit">Upload</button>
     </form>
   </div>
