@@ -26,7 +26,7 @@ export async function fileInfo(fileName) {
   }
 }
 
-export async function addFileInfoToDb(uploadedFileDetailsObject) {
+export async function addFileInfoToDb(uploadedFileDetailsObject, folder_name) {
   try {
     await prismaClientInstance.FileDetails.create({
       data: {
@@ -34,7 +34,8 @@ export async function addFileInfoToDb(uploadedFileDetailsObject) {
         hashed_file_name: uploadedFileDetailsObject.filename,
         file_url: uploadedFileDetailsObject.path,
         file_size: uploadedFileDetailsObject.size.toString(),
-        folder_name: uploadedFileDetailsObject.destination,
+        // folder_name: uploadedFileDetailsObject.destination,
+        folder_name: folder_name,
       },
     });
   } catch (err) {

@@ -12,11 +12,13 @@ export async function getFileUpload(req, res, next) {
 }
 
 export async function postUploadFiles(req, res, next) {
-  console.log(req.file);
+  // console.log(req.file);
 
   const uploadedFileDetailsObject = req.file;
+  const folder_name = req.body.folder_names;
+  console.log(folder_name);
 
-  addFileInfoToDb(uploadedFileDetailsObject);
+  addFileInfoToDb(uploadedFileDetailsObject, folder_name);
 
   res.render("fileuploaded", { uploadedFileDetails: req.file });
 }
