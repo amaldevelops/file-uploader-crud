@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import multer from "multer";
-const upload_files = multer({ dest: process.env.HOME_FOLDER });
+import {upload} from "../storage/fileSystemAccess.js";
+// const upload_files = multer({ dest: process.env.HOME_FOLDER });
 
 import { passportInstance, passport } from "../security/passportConfig.js";
 
@@ -42,7 +42,7 @@ AppRouter.get("/files", currentFileList);
 
 AppRouter.post(
   "/fileuploaded",
-  upload_files.single("file_upload"),
+  upload.single("file_upload"),
   postUploadFiles
 );
 
