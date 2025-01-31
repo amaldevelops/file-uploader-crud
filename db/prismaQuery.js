@@ -4,6 +4,46 @@ const prismaClientInstance = new PrismaClient();
 
 export { prismaClientInstance };
 
+export async function CreateFolderDb(newFolderName) {
+  try {
+    await prismaClientInstance.FileDetails.create({
+      data: {
+        Original_file_name: "",
+        hashed_file_name: newFolderName,
+        file_url: newFolderName,
+        folder_name: newFolderName,
+        file_size: "",
+      },
+    });
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function RenameFolderDb(folderName)
+{
+  try{
+
+  }
+
+  catch(err)
+  {
+    throw err;
+  }
+}
+
+export async function DeleteFolderDb(folderName)
+{
+  try{
+
+  }
+
+  catch(err)
+  {
+    throw err;
+  }
+}
+
 export async function readFileList() {
   try {
     const currentFileList = await prismaClientInstance.FileDetails.findMany();
@@ -34,20 +74,8 @@ export async function addFileInfoToDb(uploadedFileDetailsObject, folder_name) {
         hashed_file_name: uploadedFileDetailsObject.filename,
         file_url: uploadedFileDetailsObject.path,
         file_size: uploadedFileDetailsObject.size.toString(),
-        // folder_name: uploadedFileDetailsObject.destination,
-        folder_name: folder_name,
-      },
-    });
-  } catch (err) {
-    throw err;
-  }
-}
 
-export async function deleteFileInfoDb(deleteFileName) {
-  try {
-    await prismaClientInstance.FileDetails.delete({
-      where: {
-        hashed_file_name: deleteFileName,
+        folder_name: folder_name,
       },
     });
   } catch (err) {
@@ -72,18 +100,30 @@ export async function renameFileInfoDb(fileNameToChange, newDetailsObject) {
   }
 }
 
-export async function CreateFolderDb(newFolderName) {
+export async function MoveFileToFolder(moveToFolderName)
+{
+
+  try{
+
+  }
+
+  catch(err)
+  {
+    throw err;
+  }
+}
+
+export async function deleteFileInfoDb(deleteFileName) {
   try {
-    await prismaClientInstance.FileDetails.create({
-      data: {
-        Original_file_name: "",
-        hashed_file_name: newFolderName,
-        file_url: newFolderName,
-        folder_name: newFolderName,
-        file_size: "",
+    await prismaClientInstance.FileDetails.delete({
+      where: {
+        hashed_file_name: deleteFileName,
       },
     });
   } catch (err) {
     throw err;
   }
 }
+
+
+

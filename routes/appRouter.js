@@ -18,6 +18,12 @@ import {
   currentFileList,
   getFileInfo,
   postCreateFolder,
+  postRenameFolder,
+  postDeleteFolder,
+  postDownloadFile,
+  postRenameFile,
+  postMoveFile,
+  postDeleteFile
 } from "../controllers/AppController.js";
 
 const AppRouter = Router();
