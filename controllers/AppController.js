@@ -89,11 +89,12 @@ export async function currentFileList(req, res, next) {
 
 export async function getFileInfo(req, res, next) {
   const fileId = req.params;
-  console.log(fileId);
+  // console.log(fileId);
   const returnedFileInfo = await fileInfo(fileId.fileId);
+  const currentFileList = await readFileList();
   console.log(returnedFileInfo);
 
-  res.render("fileInfo", { returnedFileInfo: returnedFileInfo });
+  res.render("fileInfo", { returnedFileInfo: returnedFileInfo,currentFileList: currentFileList });
 }
 
 export async function postCreateFolder(req, res, next) {

@@ -3,26 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Info</title>
+    <title>File Operations</title>
   </head>
   <body>
     <div>
         <a href="/uploadfiles">Back Home</a>
-      <h1>File Info</h1>
-      <ul>
-        <% if(Object.keys(returnedFileInfo).length>0){%>
-        <li>Original File Name: <%=returnedFileInfo.Original_file_name%></li>
+      <h1>File Operations</h1>
+      
+      <div>
+        <h3>File Info</h3>
+        <ul>
+          <% if(Object.keys(returnedFileInfo).length>0){%>
+          <li>Original File Name: <%=returnedFileInfo.Original_file_name%></li>
+  
+          <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
+          <li>File Size: <%=returnedFileInfo.file_size%></li>
+  
+          <li>Folder Name: <%=returnedFileInfo.folder_name %></li>
+  
+          <li>Date Created: <%=returnedFileInfo.date_saved %></li>
+  
+      </div>
+           <div>
+          <h3><a href=<%=returnedFileInfo.file_url%>>Download File</a></h3>
+          
+         </div>
 
-        <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
-        <li>File Size: <%=returnedFileInfo.file_size%></li>
+         <div>
+          <h3><a href="<%=returnedFileInfo.hashed_file_name%>">Rename File</a><br></h3>
+         </div>
 
-        <li>Folder Name: <%=returnedFileInfo.folder_name %></li>
+         <div>
+          <h3>Move To Another folder</h3>
+          <form method="post" action="/fileinfo">
+            <label name="MoveToFolderName">Move To Another folder</label><br>
+       <select>
+              <% if(currentFileList.length > 0) { %>
+                <% // Group files by folder_name
+                const groupedFiles = {};
+                currentFileList.forEach(file => {
+                  const folderName = file.folder_name;
+                  if (!groupedFiles[folderName]) {
+                    groupedFiles[folderName] = [];
+                  }
+                  groupedFiles[folderName].push(file);
+                }); %>
+                
+                <% // Create options for each folder
+                Object.keys(groupedFiles).forEach(folderName => { %>
+                  <option value="<%= folderName %>" name="MoveToFolderName" ><%= folderName %></option>
+                <% }); %>
+              <% } %>
+            </select><br>
+      
+              <button type="submit">Move to Folder</button>
+            
+            </form>
+         </div>
+ <div>
+            <h3><a href="<%=returnedFileInfo.hashed_file_name%>">Delete File</a></h3>
+            </div>
 
-        <li>Date Created: <%=returnedFileInfo.date_saved %></li>
-
-         <a href=<%=returnedFileInfo.file_url%>>Download File</a><br>
-         <a href="<%=returnedFileInfo.hashed_file_name%>">Rename File</a><br>
-         <a href="<%=returnedFileInfo.hashed_file_name%>">Delete File</a>
         <%} else{%>
         <p>No Info About file available</p>
         <%} %>

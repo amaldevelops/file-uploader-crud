@@ -15,9 +15,9 @@
     <h2>Upload Files</h2>
     
     <form method="post" action="/fileuploaded" enctype="multipart/form-data" id="file_upload">
-      <label>Upload File</label>
+      
       <input type="file" name="file_upload" id="file_upload" required/><br />
-      <label>Select Folder: </label>
+      <label>Select Folder </label><br>
       <select name="folder_names" id="folder_names" form="file_upload">
   
         <% if(currentFileList.length > 0) { %>
@@ -47,14 +47,15 @@
     <div>
       <h3>Create Folders</h3>
     <form method="post" action="/folderCreated">
-      <input type="text" name="newFolderName" id="newFolderName">
+      <label name="newFolderName">New Folder Name </label><br>
+      <input type="text" name="newFolderName" id="newFolderName"><br>
       <button type="submit">Create Folder</button>
     </form>
   </div>
   <div>
     <h3>Rename Folders</h3>
     <form method="post" action="/folderRenamed">
-      <label name="currentFolderName">Current Name:</label>
+      <label name="currentFolderName">Select current folder name</label><br>
  <select>
         <% if(currentFileList.length > 0) { %>
           <% // Group files by folder_name
@@ -74,8 +75,8 @@
         <% } %>
       </select><br>
 
-        <label name="newFolderName">New Folder Name:</label>
-        <input type="text" name="newFolderName">
+        <label name="newFolderName">New Folder Name</label><br>
+        <input type="text" name="newFolderName"><br>
         <button type="submit">Rename Folder</button>
       
       </form>
@@ -83,6 +84,29 @@
 
     <div>
       <h3>Delete Folders</h3>
+      <form method="post" action="/folderRenamed">
+      <label name="currentFolderName">Select current folder name</label><br>
+ <select>
+        <% if(currentFileList.length > 0) { %>
+          <% // Group files by folder_name
+          const groupedFiles = {};
+          currentFileList.forEach(file => {
+            const folderName = file.folder_name;
+            if (!groupedFiles[folderName]) {
+              groupedFiles[folderName] = [];
+            }
+            groupedFiles[folderName].push(file);
+          }); %>
+          
+          <% // Create options for each folder
+          Object.keys(groupedFiles).forEach(folderName => { %>
+            <option value="<%= folderName %>" name="currentFolderName" ><%= folderName %></option>
+          <% }); %>
+        <% } %>
+      </select><br>
+          <button type="submit">Delete Folder</button>
+      
+      </form>
       </div>
   </div>
 
