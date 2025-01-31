@@ -44,7 +44,7 @@ export async function DeleteFolderDb(folderName)
   }
 }
 
-export async function readFileList() {
+export async function readFileListDb() {
   try {
     const currentFileList = await prismaClientInstance.FileDetails.findMany();
     return currentFileList;
@@ -53,7 +53,7 @@ export async function readFileList() {
   }
 }
 
-export async function fileInfo(fileName) {
+export async function fileInfoDb(fileName) {
   try {
     const fileInfo = await prismaClientInstance.FileDetails.findUnique({
       where: {
@@ -100,7 +100,7 @@ export async function renameFileInfoDb(fileNameToChange, newDetailsObject) {
   }
 }
 
-export async function MoveFileToFolder(moveToFolderName)
+export async function MoveFileToFolderDb(moveToFolderName)
 {
 
   try{

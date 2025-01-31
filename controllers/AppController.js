@@ -2,10 +2,16 @@ import { validationResult } from "express-validator";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
 import {
-  readFileList,
-  addFileInfoToDb,
-  fileInfo,
   CreateFolderDb,
+  RenameFolderDb,
+  DeleteFolderDb,
+  readFileListDb,
+  fileInfoDb,
+  addFileInfoToDb,
+  renameFileInfoDb,
+  MoveFileToFolderDb,
+  deleteFileInfoDb
+    
 } from "../db/prismaQuery.js";
 
 export async function getHome(req, res, next) {
@@ -55,7 +61,7 @@ export async function formValidationSignIn(req, res, next) {
 
 export async function currentFileList(req, res, next) {
   try {
-    const currentFileList = await readFileList();
+    const currentFileList = await readFileListDb();
     const CurrentlyLoggedUser = req.user;
     res.render("uploadFiles", {
       currentFileList: currentFileList,
@@ -85,8 +91,8 @@ export async function deleteFile(req, res, next) {
 
 export async function getFileInfo(req, res, next) {
   const fileId = req.params;
-  const returnedFileInfo = await fileInfo(fileId.fileId);
-  const currentFileList = await readFileList();
+  const returnedFileInfo = await fileInfoDb(fileId.fileId);
+  const currentFileList = await readFileListDb();
   res.render("fileInfo", {
     returnedFileInfo: returnedFileInfo,
     currentFileList: currentFileList,
