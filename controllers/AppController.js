@@ -118,13 +118,15 @@ export async function postRenameFolder(req, res, next) {
 
 export async function postDeleteFolder(req, res, next) {
   try {
+    res.render("folderDeleted");
   } catch (err) {
     next(err);
   }
 }
 
-export async function postDownloadFile() {
+export async function postDownloadFile(req,res,next) {
   try {
+    res.render("fileDownloaded");
   } catch (err) {
     next(err);
   }
@@ -132,6 +134,7 @@ export async function postDownloadFile() {
 
 export async function postRenameFile() {
   try {
+    res.render("fileRenamed");
   } catch (err) {
     next(err);
   }
@@ -139,6 +142,7 @@ export async function postRenameFile() {
 
 export async function postMoveFile(req, res, next) {
   try {
+    res.render("fileMoved");
   } catch (err) {
     next(err);
   }
@@ -146,6 +150,7 @@ export async function postMoveFile(req, res, next) {
 
 export async function postDeleteFile(req, res, next) {
   try {
+    res.render("fileDeleted");
   } catch (err) {
     next(err);
   }

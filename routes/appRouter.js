@@ -58,7 +58,7 @@ AppRouter.post("/folderRenamed",postRenameFolder);
 
 AppRouter.post("/folderDeleted",postDeleteFolder);
 
-AppRouter.get("/fileDownloaded",postDownloadFile);
+AppRouter.post("/filedownloaded",postDownloadFile);
 
 AppRouter.post("/fileRenamed",postRenameFile);
 

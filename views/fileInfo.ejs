@@ -25,7 +25,12 @@
   
       </div>
            <div>
-          <h3><a href=<%=returnedFileInfo.file_url%>>Download File</a></h3>
+  
+
+          <form method="post" action="/fileDownloaded">
+            <input type="text" name="fileName" value="<%=returnedFileInfo.hashed_file_name%>" readonly>
+            <button type="submit">Download File</button>
+          </form>
           
          </div>
 
@@ -33,9 +38,7 @@
           <h3>Rename File</h3>
 
           <form method="post" action="/fileInfo">
-            
-      
-              <label name="newFolderName">New File Name</label><br>
+               <label name="newFolderName">New File Name</label><br>
               <input type="text" name="newFolderName"><br>
               <button type="submit">Rename File</button>
             
