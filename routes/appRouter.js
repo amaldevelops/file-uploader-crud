@@ -54,6 +54,18 @@ AppRouter.post(
 
 AppRouter.post("/foldercreated", postCreateFolder);
 
+AppRouter.post("/folderRenamed",postRenameFolder);
+
+AppRouter.post("/folderDeleted",postDeleteFolder);
+
+AppRouter.get("/fileDownloaded",postDownloadFile);
+
+AppRouter.post("/fileRenamed",postRenameFile);
+
+AppRouter.post("/fileMoved",postMoveFile);
+
+AppRouter.post("/fileDeleted",postDeleteFile);
+
 AppRouter.get("/fileinfo/:fileId", authenticateUser, getFileInfo);
 
 export default AppRouter;

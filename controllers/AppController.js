@@ -109,6 +109,8 @@ export async function postCreateFolder(req, res, next) {
 
 export async function postRenameFolder(req, res, next) {
   try {
+
+    res.render("folderRenamed")
   } catch (err) {
     next(err);
   }
