@@ -10,8 +10,7 @@ import {
   addFileInfoToDb,
   renameFileInfoDb,
   MoveFileToFolderDb,
-  deleteFileInfoDb
-    
+  deleteFileInfoDb,
 } from "../db/prismaQuery.js";
 
 export async function getHome(req, res, next) {
@@ -109,8 +108,7 @@ export async function postCreateFolder(req, res, next) {
 
 export async function postRenameFolder(req, res, next) {
   try {
-
-    res.render("folderRenamed")
+    res.render("folderRenamed");
   } catch (err) {
     next(err);
   }
@@ -124,7 +122,7 @@ export async function postDeleteFolder(req, res, next) {
   }
 }
 
-export async function postDownloadFile(req,res,next) {
+export async function postDownloadFile(req, res, next) {
   try {
     res.render("fileDownloaded");
   } catch (err) {
@@ -132,7 +130,7 @@ export async function postDownloadFile(req,res,next) {
   }
 }
 
-export async function postRenameFile() {
+export async function postRenameFile(req, res, next) {
   try {
     res.render("fileRenamed");
   } catch (err) {

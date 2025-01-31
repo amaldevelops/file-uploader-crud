@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {upload} from "../storage/fileSystemAccess.js";
+import { upload } from "../storage/fileSystemAccess.js";
 // const upload_files = multer({ dest: process.env.HOME_FOLDER });
 
 import { passportInstance, passport } from "../security/passportConfig.js";
@@ -23,7 +23,7 @@ import {
   postDownloadFile,
   postRenameFile,
   postMoveFile,
-  postDeleteFile
+  postDeleteFile,
 } from "../controllers/AppController.js";
 
 const AppRouter = Router();
@@ -46,25 +46,21 @@ AppRouter.get("/notauthorized", getNotAuthorized);
 
 AppRouter.get("/files", currentFileList);
 
-AppRouter.post(
-  "/fileuploaded",
-  upload.single("file_upload"),
-  postUploadFiles
-);
+AppRouter.post("/fileuploaded", upload.single("file_upload"), postUploadFiles);
 
 AppRouter.post("/foldercreated", postCreateFolder);
 
-AppRouter.post("/folderRenamed",postRenameFolder);
+AppRouter.post("/folderRenamed", postRenameFolder);
 
-AppRouter.post("/folderDeleted",postDeleteFolder);
+AppRouter.post("/folderDeleted", postDeleteFolder);
 
-AppRouter.post("/filedownloaded",postDownloadFile);
+AppRouter.post("/filedownloaded", postDownloadFile);
 
-AppRouter.post("/fileRenamed",postRenameFile);
+AppRouter.post("/fileRenamed", postRenameFile);
 
-AppRouter.post("/fileMoved",postMoveFile);
+AppRouter.post("/fileMoved", postMoveFile);
 
-AppRouter.post("/fileDeleted",postDeleteFile);
+AppRouter.post("/fileDeleted", postDeleteFile);
 
 AppRouter.get("/fileinfo/:fileId", authenticateUser, getFileInfo);
 

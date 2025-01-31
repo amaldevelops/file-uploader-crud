@@ -1,57 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Operations</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Operations</title>
+</head>
+
+<body>
+  <div>
+    <a href="/uploadfiles">Back Home</a>
+    <h1>File Operations</h1>
+
     <div>
-        <a href="/uploadfiles">Back Home</a>
-      <h1>File Operations</h1>
-      
-      <div>
-        <h3>File Info</h3>
-        <ul>
-          <% if(Object.keys(returnedFileInfo).length>0){%>
-          <li>Original File Name: <%=returnedFileInfo.Original_file_name%></li>
-  
-          <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
-          <li>File Size: <%=returnedFileInfo.file_size%></li>
-  
-          <li>Folder Name: <%=returnedFileInfo.folder_name %></li>
-  
-          <li>Date Created: <%=returnedFileInfo.date_saved %></li>
-  
-      </div>
-           <div>
-  
+      <h3>File Info</h3>
+      <ul>
+        <% if(Object.keys(returnedFileInfo).length>0){%>
+        <li>Original File Name: <%=returnedFileInfo.Original_file_name%></li>
 
-          <form method="post" action="/fileDownloaded">
-            <input type="text" name="fileName" value="<%=returnedFileInfo.hashed_file_name%>" readonly>
-            <button type="submit">Download File</button>
-          </form>
-          
-         </div>
+        <li>Hashed File Name: <%=returnedFileInfo.hashed_file_name%></li>
+        <li>File Size: <%=returnedFileInfo.file_size%></li>
 
-         <div>
-          <h3>Rename File</h3>
+        <li>Folder Name: <%=returnedFileInfo.folder_name %></li>
+        <li>Date Created: <%=returnedFileInfo.date_saved %></li>
+    </div>
+    <div>
 
-          <form method="post" action="/fileInfo">
-               <label name="newFolderName">New File Name</label><br>
-              <input type="text" name="newFolderName"><br>
-              <button type="submit">Rename File</button>
-            
-            </form>
-         </div>
+      <form method="post" action="/fileDownloaded">
+        <input type="text" name="fileName" value="<%=returnedFileInfo.hashed_file_name%>" readonly>
+        <button type="submit">Download File</button>
+      </form>
 
-         <div>
-          <h3>Move To Another folder</h3>
-          <form method="post" action="/fileinfo">
-            <label name="MoveToFolderName">Move To Another folder</label><br>
-       <select>
-              <% if(currentFileList.length > 0) { %>
-                <% // Group files by folder_name
+    </div>
+
+    <div>
+      <h3>Rename File</h3>
+
+      <form method="post" action="/fileRenamed">
+        <label name="newFolderName">New File Name</label><br>
+        <input type="text" name="newFolderName"><br>
+        <button type="submit">Rename File</button>
+
+      </form>
+    </div>
+
+    <div>
+      <h3>Move To Another folder</h3>
+      <form method="post" action="/fileMoved">
+
+        <select>
+          <% if(currentFileList.length > 0) { %>
+          <% // Group files by folder_name
                 const groupedFiles = {};
                 currentFileList.forEach(file => {
                   const folderName = file.folder_name;
@@ -60,27 +59,31 @@
                   }
                   groupedFiles[folderName].push(file);
                 }); %>
-                
-                <% // Create options for each folder
-                Object.keys(groupedFiles).forEach(folderName => { %>
-                  <option value="<%= folderName %>" name="MoveToFolderName" ><%= folderName %></option>
-                <% }); %>
-              <% } %>
-            </select><br>
-      
-              <button type="submit">Move to Folder</button>
-            
-            </form>
-         </div>
- <div>
-            <h3><a href="<%=returnedFileInfo.hashed_file_name%>">Delete File (Warning ! This will permanently delete the file !)</a></h3>
-         
-            </div>
 
-        <%} else{%>
-        <p>No Info About file available</p>
-        <%} %>
-      </ul>
+          <% // Create options for each folder
+                Object.keys(groupedFiles).forEach(folderName => { %>
+          <option value="<%= folderName %>" name="MoveToFolderName"><%= folderName %></option>
+          <% }); %>
+          <% } %>
+        </select><br>
+        <button type="submit">Move to Folder</button>
+      </form>
     </div>
-  </body>
+    <div>
+<h3>Delete File</h3>
+      <form method="post" action="/fileDeleted">
+        <input type="text" name="file_name" value="<%=returnedFileInfo.hashed_file_name%>"><br>
+        <label>Warning ! This will permanently delete this file !</label><br>
+        <button type="submit">Delete File</button>
+      </form>
+
+    </div>
+
+    <%} else{%>
+    <p>No Info About file available</p>
+    <%} %>
+    </ul>
+  </div>
+</body>
+
 </html>
