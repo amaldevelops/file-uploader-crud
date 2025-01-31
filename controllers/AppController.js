@@ -21,7 +21,7 @@ export async function postUploadFiles(req, res, next) {
 
   const uploadedFileDetailsObject = req.file;
   const folder_name = req.body.folder_names;
-  console.log(folder_name);
+  // console.log(folder_name);
 
   addFileInfoToDb(uploadedFileDetailsObject, folder_name);
 
@@ -38,12 +38,9 @@ export async function deleteFile(req, res, next) {
 
 export async function authenticateUser(req, res, next) {
   try {
-    // const userSubmittedDetails = {
-    //   user_name: req.body.user_name,
-    //   password: req.body.password,
-    // };
 
     if (req.isAuthenticated()) {
+      console.log(req.user);
       return next();
     }
 
@@ -80,8 +77,9 @@ export async function formValidationSignIn(req, res, next) {
 export async function currentFileList(req, res, next) {
   try {
     const currentFileList = await readFileList();
-    console.log(currentFileList);
-    res.render("uploadFiles", { currentFileList: currentFileList });
+    // console.log(currentFileList);
+    const CurrentlyLoggedUser=req.user
+    res.render("uploadFiles", { currentFileList: currentFileList, loggedUser:CurrentlyLoggedUser.user_name});
   } catch (err) {
     next(err);
   }
@@ -92,14 +90,14 @@ export async function getFileInfo(req, res, next) {
   // console.log(fileId);
   const returnedFileInfo = await fileInfo(fileId.fileId);
   const currentFileList = await readFileList();
-  console.log(returnedFileInfo);
+  // console.log(returnedFileInfo);
 
   res.render("fileInfo", { returnedFileInfo: returnedFileInfo,currentFileList: currentFileList });
 }
 
 export async function postCreateFolder(req, res, next) {
   const newFolderName = req.body.newFolderName;
-  console.log(newFolderName);
+  // console.log(newFolderName);
 
   CreateFolderDb(newFolderName);
 
