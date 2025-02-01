@@ -1,28 +1,41 @@
 import multer from "multer";
 import path from "path";
-import fs from "fs/promises";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
+// Get the current filename and dirname for path operations
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const uploadPath = path.join(__dirname, process.env.HOME_FOLDER);
+// Base Upload Path (HOME_FOLDER from environment or default 'uploads')
+const baseUploadPath = path.join(
+  __dirname,
+  process.env.HOME_FOLDER || "uploads"
+);
 
-async function ensureUploadPath() {
-  try {
-    await fs.mkdir(uploadPath, { recursive: true });
-    console.log(__dirname);
-  } catch (err) {
-    console.error("Error creating upload directory:", err);
+// Ensure Directory Exists (Sync because Multer does not support async `destination`)
+function ensureUploadPath(folderName) {
+  const folderPath = path.join(baseUploadPath, folderName);
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
   }
+  return folderPath;
 }
 
+// Multer Storage Configuration
 const storage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    await ensureUploadPath();
+  destination: (req, file, cb) => {
+    const folderName = req.body.folder_names || "default"; // Default folder if not provided
+
+    console.log(folderName);
+    // Ensure the folder exists
+    const uploadPath = ensureUploadPath(folderName);
+
+    // Set the destination for the uploaded file
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
+    // Generate a unique filename
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
@@ -31,17 +44,18 @@ const storage = multer.diskStorage({
   },
 });
 
+// Multer upload configuration
 export const upload = multer({ storage });
 
-export const getUploadPath = () => uploadPath;
-
-export const listUploadedFiles = async () => {
+// Function to get uploaded files in a specific folder
+export const listUploadedFiles = async (folderName) => {
   try {
-    const files = await fs.readdir(uploadPath);
+    const folderPath = path.join(baseUploadPath, folderName || "default");
+    const files = await fs.promises.readdir(folderPath);
     return files.map((file) => ({
       name: file,
-      url: `uploads/${file}`,
-      path: path.join(uploadPath, file),
+      url: `uploads/${folderName}/${file}`,
+      path: path.join(folderPath, file),
     }));
   } catch (err) {
     if (err.code === "ENOENT") return [];

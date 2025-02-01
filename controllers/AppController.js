@@ -1,7 +1,9 @@
 import { validationResult } from "express-validator";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
-import { getUploadPath } from "../storage/fileSystemAccess.js";
+// import { getUploadPath } from "../storage/fileSystemAccess.js";
+
+import { upload } from "../storage/fileSystemAccess.js";
 
 import {
   CreateFolderDb,
@@ -26,7 +28,7 @@ export async function getFileUpload(req, res, next) {
 export async function authenticateUser(req, res, next) {
   try {
     if (req.isAuthenticated()) {
-      console.log(req.user);
+      // console.log(req.user);
       return next();
     }
 
@@ -74,12 +76,13 @@ export async function currentFileList(req, res, next) {
 }
 
 export async function postUploadFiles(req, res, next) {
+  console.log(req.body.folder_names);
   const uploadedFileDetailsObject = req.file;
   const folder_name = req.body.folder_names;
 
-  console.log(getUploadPath());
+  // console.log(uploadedFileDetailsObject);
 
-  addFileInfoToDb(uploadedFileDetailsObject, folder_name);
+  await addFileInfoToDb(uploadedFileDetailsObject, folder_name);
 
   res.render("fileuploaded", { uploadedFileDetails: req.file });
 }
