@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from "path";
-import fs from "fs";
+import fs from "fs/promises";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -8,9 +8,18 @@ const __dirname = path.dirname(__filename);
 
 const uploadPath = path.join(__dirname, process.env.HOME_FOLDER);
 
+async function ensureUploadPath() {
+  try {
+    await fs.mkdir(uploadPath, { recursive: true });
+    console.log(__dirname);
+  } catch (err) {
+    console.error("Error creating upload directory:", err);
+  }
+}
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    fs.mkdirSync(uploadPath, { recursive: true });
+  destination: async (req, file, cb) => {
+    await ensureUploadPath();
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
@@ -24,13 +33,11 @@ const storage = multer.diskStorage({
 
 export const upload = multer({ storage });
 
-//File system Operations
-
 export const getUploadPath = () => uploadPath;
 
 export const listUploadedFiles = async () => {
   try {
-    const files = await fs.promises.readdir(upload);
+    const files = await fs.readdir(uploadPath);
     return files.map((file) => ({
       name: file,
       url: `uploads/${file}`,

@@ -1,6 +1,8 @@
 import { validationResult } from "express-validator";
 import { prismaClientInstance } from "../db/prismaQuery.js";
 
+import { getUploadPath } from "../storage/fileSystemAccess.js";
+
 import {
   CreateFolderDb,
   RenameFolderDb,
@@ -75,6 +77,8 @@ export async function postUploadFiles(req, res, next) {
   const uploadedFileDetailsObject = req.file;
   const folder_name = req.body.folder_names;
 
+  console.log(getUploadPath());
+
   addFileInfoToDb(uploadedFileDetailsObject, folder_name);
 
   res.render("fileuploaded", { uploadedFileDetails: req.file });
@@ -124,7 +128,9 @@ export async function postDeleteFolder(req, res, next) {
 
 export async function postDownloadFile(req, res, next) {
   try {
-    res.render("fileDownloaded");
+    const filePath = req.body.fileName;
+    res.download(filePath);
+    // res.render("fileDownloaded");
   } catch (err) {
     next(err);
   }
