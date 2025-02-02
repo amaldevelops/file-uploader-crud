@@ -157,6 +157,8 @@ export async function postMoveFile(req, res, next) {
 
 export async function postDeleteFile(req, res, next) {
   try {
+    console.log(req.body.file_name);
+    deleteFileInfoDb(req.body.file_name);
     res.render("fileDeleted");
   } catch (err) {
     next(err);

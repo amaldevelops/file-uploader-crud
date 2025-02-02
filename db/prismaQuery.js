@@ -115,7 +115,9 @@ export async function MoveFileToFolderDb(moveToFolderName)
 
 export async function deleteFileInfoDb(deleteFileName) {
   try {
+    console.log(deleteFileName);
     await prismaClientInstance.FileDetails.delete({
+      
       where: {
         hashed_file_name: deleteFileName,
       },
