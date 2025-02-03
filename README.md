@@ -4,25 +4,29 @@
 
 This project is a minimalistic implementation of a personal storage service, inspired by platforms like Google Drive. It offers users the ability to upload, manage, and share files and folders in a secure and structured environment. This project demonstrates expertise in backend development using **Express**, **Prisma**, and modern authentication practices.
 
----
+- Live Version (https://nodejs-file-uploader-crud.onrender.com)
 
 ## **Features**
 
 ### **Core Features**
 
 1. **Session-Based Authentication**:
+
    - Utilizes **Passport.js** for authentication.
    - Sessions are persisted using the **Prisma session store**, ensuring consistent user sessions across server restarts.
 
 2. **File Upload**:
+
    - Authenticated users can upload files using **Multer** middleware.
    - Files are initially saved to the local filesystem.
 
 3. **Folder Management**:
+
    - Complete CRUD (Create, Read, Update, Delete) functionality for folders.
    - Files can be organized within folders.
 
 4. **File Details and Downloads**:
+
    - View detailed metadata of uploaded files, including:
      - Name
      - Size
@@ -38,7 +42,7 @@ This project is a minimalistic implementation of a personal storage service, ins
 - **Backend**: Node.js, Express.js
 - **Database**: PostgreSQL (managed with Prisma ORM)
 - **Authentication**: Passport.js (with session-based authentication)
-- **File Storage**: 
+- **File Storage**:
   - Local filesystem (initial stage)
   - Cloudinary or Supabase Storage (final stage)
 - **Session Management**: Prisma session store
@@ -56,7 +60,6 @@ This project is a minimalistic implementation of a personal storage service, ins
 - Environment variables configured:
   - `DATABASE_URL`
   - `SESSION_SECRET`
-  - `CLOUDINARY_URL` or equivalent for your chosen storage provider
 
 ### **Installation**
 
@@ -66,6 +69,7 @@ This project is a minimalistic implementation of a personal storage service, ins
    git clone git@github.com:1Amal/NodeJs-File-Uploader-CRUD.git
    cd NodeJs-File-Uploader-CRUD
    ```
+
 2. Install dependencies:
 
 ```bash
@@ -98,8 +102,8 @@ npm start
 
 ```
 
- ## Further Development Notes
-   
+## Further Development Notes
+
 - Due to time constraints following functionality is not yet Implemented
 
 1. Save Files/Folders under different Usernames i.e. maverick@gmail.com
