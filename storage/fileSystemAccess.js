@@ -2,9 +2,11 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+
 import { unlink } from "node:fs/promises";
 import { fileInfoDb } from "../db/prismaQuery.js";
-import { supabase } from "./supabaseClient.js"; // Ensure this path is correct
+// const supabase = require('./supabaseClient');
+// import supabase from "/supabaseClient";
 
 // Get the current filename and dirname for path operations
 const __filename = fileURLToPath(import.meta.url);
@@ -16,68 +18,54 @@ const baseUploadPath = path.join(
   process.env.HOME_FOLDER || "uploads"
 );
 
-// Multer Storage Configuration (using memory storage)
-const memStorage = multer.memoryStorage(); // Use memory storage to handle files in memory
+// Ensure Directory Exists (Sync because Multer does not support async `destination`)
+function ensureUploadPath(folderName) {
+  console.log(__dirname);
+  const folderPath = path.join(baseUploadPath, folderName);
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
+  }
+  return folderPath;
+}
+
+// Multer Storage Configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    console.log(req.user.user_name);
+    const folderName = req.body.folder_names || "default"; // Default folder if not provided
+
+    console.log(folderName);
+    // Ensure the folder exists
+    const uploadPath = ensureUploadPath(folderName);
+
+    // Set the destination for the uploaded file
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    // Generate a unique filename
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
+    );
+  },
+});
 
 // Multer upload configuration
-export const upload = multer({ storage: memStorage });
+export const upload = multer({ storage });
 
-// Function to upload file to Supabase Storage
-export const storage = async (file, folderName) => {
-  const { data, error } = await supabase.storage
-    .from("your-bucket-name") // Replace with your Supabase bucket name
-    .upload(`${folderName}/${file.originalname}`, file.buffer, {
-      contentType: file.mimetype, // Set the content type
-    });
-
-  if (error) {
-    console.error("Error uploading to Supabase:", error);
-    throw error;
-  }
-
-  console.log("File uploaded successfully:", data);
-  return data;
-};
-
-// Function to handle file upload
-export const handleFileUpload = async (req, res) => {
-  try {
-    const folderName = req.body.folder_names || "default"; // Default folder if not provided
-    const file = req.file; // Get the uploaded file from the request
-
-    if (!file) {
-      return res.status(400).send("No file uploaded.");
-    }
-
-    // Upload the file to Supabase
-    const uploadResponse = await storage(file, folderName);
-    res
-      .status(200)
-      .json({ message: "File uploaded successfully", data: uploadResponse });
-  } catch (err) {
-    console.error("Error handling file upload:", err);
-    res.status(500).send("Error uploading file.");
-  }
-};
-
-// Function to get uploaded files in a specific folder (if needed)
+// Function to get uploaded files in a specific folder
 export const listUploadedFiles = async (folderName) => {
   try {
-    const { data, error } = await supabase.storage
-      .from("your-bucket-name") // Replace with your Supabase bucket name
-      .list(folderName);
-
-    if (error) {
-      console.error("Error listing files:", error);
-      throw error;
-    }
-
-    return data.map((file) => ({
-      name: file.name,
-      url: `https://your-project-ref.supabase.co/storage/v1/object/public/${file.name}`, // Adjust the URL as needed
+    const folderPath = path.join(baseUploadPath, folderName || "default");
+    const files = await fs.promises.readdir(folderPath);
+    return files.map((file) => ({
+      name: file,
+      url: `uploads/${folderName}/${file}`,
+      path: path.join(folderPath, file),
     }));
   } catch (err) {
-    console.error("Error retrieving files:", err);
+    if (err.code === "ENOENT") return [];
     throw err;
   }
 };
