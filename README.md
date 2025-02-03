@@ -33,17 +33,6 @@ This project is a minimalistic implementation of a personal storage service, ins
    - Files are uploaded to a cloud storage service (**Cloudinary** or **Supabase Storage**) for scalable and efficient storage.
    - The file URL is stored in the database for easy access.
 
----
-
-### **Extra Credit**
-
-1. **Folder Sharing**:
-   - Share folders with all their contents via a time-bound link.
-   - Example format: `https://yourapp.com/share/c758c495-0705-44c6-8bab-6635fd12cf81`.
-   - Unauthenticated users can access shared links within the specified duration.
-
----
-
 ## **Tech Stack**
 
 - **Backend**: Node.js, Express.js
@@ -61,7 +50,7 @@ This project is a minimalistic implementation of a personal storage service, ins
 
 ### **Prerequisites**
 
-- Node.js (v16+)
+- Node.js / fs / Express / Passport / Multer
 - PostgreSQL
 - Cloudinary or Supabase account for cloud storage
 - Environment variables configured:
@@ -108,3 +97,13 @@ npx prisma migrate dev --name init
 npm start
 
 ```
+
+ ## Further Development Notes
+   
+- Due to time constraints following functionality is not yet Implemented
+
+1. Save Files/Folders under different Usernames i.e. maverick@gmail.com
+2. Rename Folders
+3. Rename Files
+4. Move Files to other folders
+5. User Signup functionality

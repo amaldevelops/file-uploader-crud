@@ -22,6 +22,63 @@
         <br />
         <button type="submit">Submit</button>
       </form>
+
+      <div>
+        <h1>Project Information</h1>
+        <h3>Core Features</h3>
+        <ul>
+          <li>
+            Session-Based Authentication:Utilizes Passport.js for
+            authentication. Sessions are persisted using the Prisma session
+            store, ensuring consistent user sessions across server restarts.
+          </li>
+          <li>
+            File Upload:Authenticated users can upload files using Multer
+            middleware.Files are initially saved to the local filesystem.
+          </li>
+          <li>
+            Folder Management:Complete CRUD (Create, Read, Update, Delete)
+            functionality for folders. Files can be organized within folders.
+          </li>
+          <li>
+            File Details and Downloads:View detailed metadata of uploaded files,
+            including:Name, Size, Upload timestamp Download functionality to
+            retrieve files. Cloud Storage Integration:Files are uploaded to a
+            cloud storage service (Cloudinary or Supabase Storage) for scalable
+            and efficient storage. The file URL is stored in the database for
+            easy access.
+          </li>
+        </ul>
+
+        <h3>Project Setup</h3>
+        <ul>
+          <li>Node.js / fs / Express / Passport / Multer</li>
+          <li>PostgreSQL</li>
+          <li>Cloudinary or Supabase account for cloud storage</li>
+        </ul>
+
+        <h3>Source Code</h3>
+        <a
+          href="https://github.com/1Amal/NodeJs-File-Uploader-CRUD"
+          target="_blank"
+          >Github: NodeJs-File-Uploader-CRUD
+        </a>
+      </div>
+      <div>
+        <h2>Further Development Notes</h2>
+        <p>
+          Due to time constraints following functionality is not yet Implemented
+        </p>
+        <ul>
+          <li>User Signup functionality</li>
+          <li>
+            Save Files/Folders under different Usernames i.e. maverick@gmail.com
+          </li>
+          <li>Rename Folders</li>
+          <li>Rename Files</li>
+          <li>Move Files to other folders</li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>

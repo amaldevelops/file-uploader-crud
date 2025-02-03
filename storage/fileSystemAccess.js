@@ -10,6 +10,7 @@ import { fileInfoDb } from "../db/prismaQuery.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
 // Base Upload Path (HOME_FOLDER from environment or default 'uploads')
 const baseUploadPath = path.join(
   __dirname,
@@ -18,6 +19,7 @@ const baseUploadPath = path.join(
 
 // Ensure Directory Exists (Sync because Multer does not support async `destination`)
 function ensureUploadPath(folderName) {
+  console.log(__dirname);
   const folderPath = path.join(baseUploadPath, folderName);
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
@@ -28,6 +30,7 @@ function ensureUploadPath(folderName) {
 // Multer Storage Configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    console.log(req.user.user_name);
     const folderName = req.body.folder_names || "default"; // Default folder if not provided
 
     console.log(folderName);
