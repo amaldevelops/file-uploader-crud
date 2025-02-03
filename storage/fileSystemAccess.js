@@ -3,6 +3,9 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 
+import { unlink } from "node:fs/promises";
+import { fileInfoDb } from "../db/prismaQuery.js";
+
 // Get the current filename and dirname for path operations
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,3 +65,14 @@ export const listUploadedFiles = async (folderName) => {
     throw err;
   }
 };
+
+export async function deleteFileByHashedName(hashedFileName) {
+  try {
+    console.log(hashedFileName);
+    const returnedFileUrl=await fileInfoDb(hashedFileName);
+    await unlink(returnedFileUrl.file_url);
+    console.log(returnedFileUrl.file_url);
+  } catch (err) {
+    console.error("There was an error:", err.message);
+  }
+}

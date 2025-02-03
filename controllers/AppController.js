@@ -3,7 +3,7 @@ import { prismaClientInstance } from "../db/prismaQuery.js";
 
 // import { getUploadPath } from "../storage/fileSystemAccess.js";
 
-import { upload } from "../storage/fileSystemAccess.js";
+import { upload, deleteFileByHashedName } from "../storage/fileSystemAccess.js";
 
 import {
   CreateFolderDb,
@@ -28,7 +28,6 @@ export async function getFileUpload(req, res, next) {
 export async function authenticateUser(req, res, next) {
   try {
     if (req.isAuthenticated()) {
-      // console.log(req.user);
       return next();
     }
 
@@ -79,8 +78,6 @@ export async function postUploadFiles(req, res, next) {
   console.log(req.body.folder_names);
   const uploadedFileDetailsObject = req.file;
   const folder_name = req.body.folder_names;
-
-  // console.log(uploadedFileDetailsObject);
 
   await addFileInfoToDb(uploadedFileDetailsObject, folder_name);
 
@@ -133,7 +130,6 @@ export async function postDownloadFile(req, res, next) {
   try {
     const filePath = req.body.fileName;
     res.download(filePath);
-    // res.render("fileDownloaded");
   } catch (err) {
     next(err);
   }
@@ -157,8 +153,9 @@ export async function postMoveFile(req, res, next) {
 
 export async function postDeleteFile(req, res, next) {
   try {
-    console.log(req.body.file_name);
-    deleteFileInfoDb(req.body.file_name);
+    const fileHashToBeDeleted = req.body.file_name;
+    deleteFileInfoDb(fileHashToBeDeleted);
+    deleteFileByHashedName(fileHashToBeDeleted);
     res.render("fileDeleted");
   } catch (err) {
     next(err);
